@@ -11,7 +11,7 @@ RESULTS_URL = HOST + "/markets/oil_products/trades/results"
 
 BASE_DIR = Path(__file__).parent.parent
 
-config = Config(".env")
+config = Config("../.env")
 
 
 class RunConfig(BaseModel):
