@@ -1,8 +1,11 @@
 import logging
+from time import time
 
+import asyncio
 from aiohttp import ClientSession
 from bs4 import BeautifulSoup
 
+from src.config import RESULTS_URL
 from src.service_layer.utils import get_date_from_link
 
 log = logging.getLogger(__name__)
@@ -59,3 +62,34 @@ def extract_links_from_response(
                 is_new = False
                 break
     return links, is_new
+
+
+async def get_new_trading_results_links(
+    session: ClientSession, earliest_date: str = "20230101"
+) -> set[str]:
+    """
+    Get unique links to XLS files with daily trading results from the website.
+
+    Args:
+        session (ClientSession): The aiohttp ClientSession object.
+        earliest_date (str, optional): The earliest date to consider in the format "YYYYMMDD".
+
+    Returns:
+        set[str]: The unique links to XLS files with daily trading results.
+    """
+    t0 = time()
+    page_num = 1
+    links = set()
+    log.info("Start getting links from the website...")
+    is_new = True
+    while is_new:
+        url = f"{RESULTS_URL}?page=page-{page_num}"
+        response = await get_html(url=url, session=session)
+        links, is_new = await asyncio.to_thread(
+            extract_links_from_response, response, earliest_date, links, is_new
+        )
+        page_num += 1
+    log.warning(
+        f"Got links from the website. Execution time {time() - t0:.3f} seconds."
+    )
+    return links
