@@ -390,6 +390,17 @@ files = [
 ]
 
 [[package]]
+name = "defusedxml"
+version = "0.7.1"
+description = "XML bomb protection for Python stdlib modules"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+files = [
+    {file = "defusedxml-0.7.1-py2.py3-none-any.whl", hash = "sha256:a352e7e428770286cc899e2542b6cdaedb2b4953ff269a210103ec58f6198a61"},
+    {file = "defusedxml-0.7.1.tar.gz", hash = "sha256:1bb3032db185915b62d7c6209c5a8792be6a32ab2fedacc84e01b52c51aa3e69"},
+]
+
+[[package]]
 name = "dnspython"
 version = "2.7.0"
 description = "DNS toolkit"
@@ -423,6 +434,17 @@ files = [
 [package.dependencies]
 dnspython = ">=2.0.0"
 idna = ">=2.0.0"
+
+[[package]]
+name = "et-xmlfile"
+version = "2.0.0"
+description = "An implementation of lxml.xmlfile for the standard library"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "et_xmlfile-2.0.0-py3-none-any.whl", hash = "sha256:7a91720bc756843502c3b7504c77b8fe44217c85c537d85037f0f536151b2caa"},
+    {file = "et_xmlfile-2.0.0.tar.gz", hash = "sha256:dab3f4764309081ce75662649be815c4c9081e88f0837825f90fd28317d4da54"},
+]
 
 [[package]]
 name = "fastapi"
@@ -1132,6 +1154,33 @@ files = [
 ]
 
 [[package]]
+name = "odfpy"
+version = "1.4.1"
+description = "Python API and tools to manipulate OpenDocument files"
+optional = false
+python-versions = "*"
+files = [
+    {file = "odfpy-1.4.1.tar.gz", hash = "sha256:db766a6e59c5103212f3cc92ec8dd50a0f3a02790233ed0b52148b70d3c438ec"},
+]
+
+[package.dependencies]
+defusedxml = "*"
+
+[[package]]
+name = "openpyxl"
+version = "3.1.5"
+description = "A Python library to read/write Excel 2010 xlsx/xlsm files"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "openpyxl-3.1.5-py2.py3-none-any.whl", hash = "sha256:5282c12b107bffeef825f4617dc029afaf41d0ea60823bbb665ef3079dc79de2"},
+    {file = "openpyxl-3.1.5.tar.gz", hash = "sha256:cf0e3cf56142039133628b5acffe8ef0c12bc902d2aadd3e0fe5878dc08d1050"},
+]
+
+[package.dependencies]
+et-xmlfile = "*"
+
+[[package]]
 name = "packaging"
 version = "25.0"
 description = "Core utilities for Python packages"
@@ -1195,9 +1244,15 @@ files = [
 
 [package.dependencies]
 numpy = {version = ">=1.26.0", markers = "python_version >= \"3.12\""}
+odfpy = {version = ">=1.4.1", optional = true, markers = "extra == \"excel\""}
+openpyxl = {version = ">=3.1.0", optional = true, markers = "extra == \"excel\""}
+python-calamine = {version = ">=0.1.7", optional = true, markers = "extra == \"excel\""}
 python-dateutil = ">=2.8.2"
 pytz = ">=2020.1"
+pyxlsb = {version = ">=1.0.10", optional = true, markers = "extra == \"excel\""}
 tzdata = ">=2022.7"
+xlrd = {version = ">=2.0.1", optional = true, markers = "extra == \"excel\""}
+xlsxwriter = {version = ">=3.0.5", optional = true, markers = "extra == \"excel\""}
 
 [package.extras]
 all = ["PyQt5 (>=5.15.9)", "SQLAlchemy (>=2.0.0)", "adbc-driver-postgresql (>=0.8.0)", "adbc-driver-sqlite (>=0.8.0)", "beautifulsoup4 (>=4.11.2)", "bottleneck (>=1.3.6)", "dataframe-api-compat (>=0.1.7)", "fastparquet (>=2022.12.0)", "fsspec (>=2022.11.0)", "gcsfs (>=2022.11.0)", "html5lib (>=1.1)", "hypothesis (>=6.46.1)", "jinja2 (>=3.1.2)", "lxml (>=4.9.2)", "matplotlib (>=3.6.3)", "numba (>=0.56.4)", "numexpr (>=2.8.4)", "odfpy (>=1.4.1)", "openpyxl (>=3.1.0)", "pandas-gbq (>=0.19.0)", "psycopg2 (>=2.9.6)", "pyarrow (>=10.0.1)", "pymysql (>=1.0.2)", "pyreadstat (>=1.2.0)", "pytest (>=7.3.2)", "pytest-xdist (>=2.2.0)", "python-calamine (>=0.1.7)", "pyxlsb (>=1.0.10)", "qtpy (>=2.3.0)", "s3fs (>=2022.11.0)", "scipy (>=1.10.0)", "tables (>=3.8.0)", "tabulate (>=0.9.0)", "xarray (>=2022.12.0)", "xlrd (>=2.0.1)", "xlsxwriter (>=3.0.5)", "zstandard (>=0.19.0)"]
@@ -1550,6 +1605,113 @@ files = [
 windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
+name = "python-calamine"
+version = "0.3.2"
+description = "Python binding for Rust's library for reading excel and odf file - calamine"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "python_calamine-0.3.2-cp310-cp310-macosx_10_12_x86_64.whl", hash = "sha256:93c5e2ff4d6dd96bff065f276048368d345c88fb41e72fb171b0beef294a8691"},
+    {file = "python_calamine-0.3.2-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:219e65f34cd3e96b31edcd22a47252b5eb083e653f62d7055c0a39a5f35fa878"},
+    {file = "python_calamine-0.3.2-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:523b21cf500f4df69902bffa3e2350d2432ff45df054f9ef9d64fd8616c5141e"},
+    {file = "python_calamine-0.3.2-cp310-cp310-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:f2b09dfef4e843ed609674dc5f64081e2cfc4538b16b74e8b1af89af6a4b7b39"},
+    {file = "python_calamine-0.3.2-cp310-cp310-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:97d9e4165dcb835b512b49f846b9d9aab9f7f1e07ac5af5466415875e626ed90"},
+    {file = "python_calamine-0.3.2-cp310-cp310-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:1597c65355e928d28f088a20bb56ac1efe0c33c52a77a483629921bfd45c516d"},
+    {file = "python_calamine-0.3.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:bd17940b6ee604d7e46cbf73f4488beee95f8dd9b95195f179951b63945372b3"},
+    {file = "python_calamine-0.3.2-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:34c8e5575e66b8abc502be77658ca86017e04e3f316c34b973ffe8bc6cfc53be"},
+    {file = "python_calamine-0.3.2-cp310-cp310-musllinux_1_1_aarch64.whl", hash = "sha256:558657ed1bb45e8050e71a62bb0e8cd7d18581cf403cb51f6b536d7cdfd9c00d"},
+    {file = "python_calamine-0.3.2-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:595a81ebfc1bfd36253e3f436c4465a47d8d4edab98e95bba95a334f5eabf37d"},
+    {file = "python_calamine-0.3.2-cp310-cp310-win32.whl", hash = "sha256:5c282cb3004b667a71820b00f77d081264a425a5a1f9636e5a06c75e02924d23"},
+    {file = "python_calamine-0.3.2-cp310-cp310-win_amd64.whl", hash = "sha256:8cce413ab8a2f0d2e63412e38e8ec4c5d9127d31b3133dc29fde330e7c47b30c"},
+    {file = "python_calamine-0.3.2-cp311-cp311-macosx_10_12_x86_64.whl", hash = "sha256:5251746816069c38eafdd1e4eb7b83870e1fe0ff6191ce9a809b187ffba8ce93"},
+    {file = "python_calamine-0.3.2-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:9775dbc93bc635d48f45433f8869a546cca28c2a86512581a05333f97a18337b"},
+    {file = "python_calamine-0.3.2-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6ff4318b72ba78e8a04fb4c45342cfa23eab6f81ecdb85548cdab9f2db8ac9c7"},
+    {file = "python_calamine-0.3.2-cp311-cp311-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:0cd8eb1ef8644da71788a33d3de602d1c08ff1c4136942d87e25f09580b512ef"},
+    {file = "python_calamine-0.3.2-cp311-cp311-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:9dcfd560d8f88f39d23b829f666ebae4bd8daeec7ed57adfb9313543f3c5fa35"},
+    {file = "python_calamine-0.3.2-cp311-cp311-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:e5e79b9eae4b30c82d045f9952314137c7089c88274e1802947f9e3adb778a59"},
+    {file = "python_calamine-0.3.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ce5e8cc518c8e3e5988c5c658f9dcd8229f5541ca63353175bb15b6ad8c456d0"},
+    {file = "python_calamine-0.3.2-cp311-cp311-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:2a0e596b1346c28b2de15c9f86186cceefa4accb8882992aa0b7499c593446ed"},
+    {file = "python_calamine-0.3.2-cp311-cp311-musllinux_1_1_aarch64.whl", hash = "sha256:f521de16a9f3e951ec2e5e35d76752fe004088dbac4cdbf4dd62d0ad2bbf650f"},
+    {file = "python_calamine-0.3.2-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:417d6825a36bba526ae17bed1b6ca576fbb54e23dc60c97eeb536c622e77c62f"},
+    {file = "python_calamine-0.3.2-cp311-cp311-win32.whl", hash = "sha256:cd3ea1ca768139753633f9f0b16997648db5919894579f363d71f914f85f7ade"},
+    {file = "python_calamine-0.3.2-cp311-cp311-win_amd64.whl", hash = "sha256:4560100412d8727c49048cca102eadeb004f91cfb9c99ae63cd7d4dc0a61333a"},
+    {file = "python_calamine-0.3.2-cp311-cp311-win_arm64.whl", hash = "sha256:a2526e6ba79087b1634f49064800339edb7316780dd7e1e86d10a0ca9de4e90f"},
+    {file = "python_calamine-0.3.2-cp312-cp312-macosx_10_12_x86_64.whl", hash = "sha256:7c063b1f783352d6c6792305b2b0123784882e2436b638a9b9a1e97f6d74fa51"},
+    {file = "python_calamine-0.3.2-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:85016728937e8f5d1810ff3c9603ffd2458d66e34d495202d7759fa8219871cd"},
+    {file = "python_calamine-0.3.2-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:81f243323bf712bb0b2baf0b938a2e6d6c9fa3b9902a44c0654474d04f999fac"},
+    {file = "python_calamine-0.3.2-cp312-cp312-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:0b719dd2b10237b0cfb2062e3eaf199f220918a5623197e8449f37c8de845a7c"},
+    {file = "python_calamine-0.3.2-cp312-cp312-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:d5158310b9140e8ee8665c9541a11030901e7275eb036988150c93f01c5133bf"},
+    {file = "python_calamine-0.3.2-cp312-cp312-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:b2c1b248e8bf10194c449cb57e6ccb3f2fe3dc86975a6d746908cf2d37b048cc"},
+    {file = "python_calamine-0.3.2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:f3a13ad8e5b6843a73933b8d1710bc4df39a9152cb57c11227ad51f47b5838a4"},
+    {file = "python_calamine-0.3.2-cp312-cp312-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:fe950975a5758423c982ce1e2fdcb5c9c664d1a20b41ea21e619e5003bb4f96b"},
+    {file = "python_calamine-0.3.2-cp312-cp312-musllinux_1_1_aarch64.whl", hash = "sha256:8707622ba816d6c26e36f1506ecda66a6a6cf43e55a43a8ef4c3bf8a805d3cfb"},
+    {file = "python_calamine-0.3.2-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:e6eac46475c26e162a037f6711b663767f61f8fca3daffeb35aa3fc7ee6267cc"},
+    {file = "python_calamine-0.3.2-cp312-cp312-win32.whl", hash = "sha256:0dee82aedef3db27368a388d6741d69334c1d4d7a8087ddd33f1912166e17e37"},
+    {file = "python_calamine-0.3.2-cp312-cp312-win_amd64.whl", hash = "sha256:ae09b779718809d31ca5d722464be2776b7d79278b1da56e159bbbe11880eecf"},
+    {file = "python_calamine-0.3.2-cp312-cp312-win_arm64.whl", hash = "sha256:435546e401a5821fa70048b6c03a70db3b27d00037e2c4999c2126d8c40b51df"},
+    {file = "python_calamine-0.3.2-cp313-cp313-macosx_10_12_x86_64.whl", hash = "sha256:0a92245899f5bcbf5203f98baa601267f805b715767d1e0283376868aa98bc98"},
+    {file = "python_calamine-0.3.2-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:44249ddec1d192bd1ccdbf8357ca3f672680fe8b2b1eb02f973dbffbaf315bd5"},
+    {file = "python_calamine-0.3.2-cp313-cp313-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:b4eede030499e63ec497df24dfb2ad4a38c2c1fd6eb8c28ca904ccf51b413af8"},
+    {file = "python_calamine-0.3.2-cp313-cp313-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:e96ae590a787fb41131488c7df02dd3458d8c20870e0ededf0851554eb13059c"},
+    {file = "python_calamine-0.3.2-cp313-cp313-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:4c9bc2b423d3c27bf5ab2fedc15c364fe4d51d022f5c7e9202ed2f7fbf658ee3"},
+    {file = "python_calamine-0.3.2-cp313-cp313-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:f0a97a3dfb02a44b2ab31584713948a521d85c01471e2267b6a9862cf1e16011"},
+    {file = "python_calamine-0.3.2-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8d69c9eb6c7158e2c9daa81cfc073cb26fd0f0e85164dfca2eb792179dc035b3"},
+    {file = "python_calamine-0.3.2-cp313-cp313-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:3260be0308bc09df3a44510707efa5ff72bf518c7c3966da6b6c8f4efb3b6bc2"},
+    {file = "python_calamine-0.3.2-cp313-cp313-musllinux_1_1_aarch64.whl", hash = "sha256:64745aea621c8e59a06bd36eff26626cfc5d2a28cee34aecb43b07c994fa04b6"},
+    {file = "python_calamine-0.3.2-cp313-cp313-musllinux_1_1_x86_64.whl", hash = "sha256:ae7f9eb2edff46c67093091df64578d3d3b89f9423e8fdcc009084342fcc0fa9"},
+    {file = "python_calamine-0.3.2-cp313-cp313-win32.whl", hash = "sha256:780582293a8df83f1d51f65e4d7421d4a2e705adc60d819efc5a4577dd21132f"},
+    {file = "python_calamine-0.3.2-cp313-cp313-win_amd64.whl", hash = "sha256:06f47872ed96caa848cb399b4d2c84e2db31154378216902c6540c92fbd2b58f"},
+    {file = "python_calamine-0.3.2-cp313-cp313-win_arm64.whl", hash = "sha256:158db4f898c3affc8543643f414b7832dd05cc941aa2c026d177c1a6c390e3a7"},
+    {file = "python_calamine-0.3.2-cp38-cp38-macosx_10_12_x86_64.whl", hash = "sha256:34b6422abe9b2dba35502a6e13ea8ae3288b619f0cb4684030b0bf11c700015f"},
+    {file = "python_calamine-0.3.2-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:a55c6fc83f382f4f5543774bd6928076a695d747bfc610c8982565f50944cb13"},
+    {file = "python_calamine-0.3.2-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:5b9f25aad85be1a6962b3da1fae4142ea6d784f93be0bfd62afe3913474ce0af"},
+    {file = "python_calamine-0.3.2-cp38-cp38-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:00b16cb8d880cc3db7279ed6232e09057cb041d9facff55777728c0694ce3cbc"},
+    {file = "python_calamine-0.3.2-cp38-cp38-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:ba3beb28a391c34a7ce0bc9373ea6ca859e52bc80c941f2b2396558aed5b57d1"},
+    {file = "python_calamine-0.3.2-cp38-cp38-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:69e6ce3ec5cb6af6636423f4e99fbf65650cfd1a2ada141310a5045a63d197ec"},
+    {file = "python_calamine-0.3.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:6cf8cd9bce23dac2f0fe63952b04bad7a48cb28a209025169295c5cce09df10c"},
+    {file = "python_calamine-0.3.2-cp38-cp38-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:89cb8d93fa8e00960eed1b4ccc74a85c1793489eafd589bf562c0810b561dddb"},
+    {file = "python_calamine-0.3.2-cp38-cp38-musllinux_1_1_aarch64.whl", hash = "sha256:8c1bcd8e96c1d5d99721bd2b4c1185a5c7a68c794cbdc459fb44d6a8ac860e36"},
+    {file = "python_calamine-0.3.2-cp38-cp38-musllinux_1_1_x86_64.whl", hash = "sha256:f3ed42e883301c5bc055a84992022d84536146de55f6e2329919acd44c95c095"},
+    {file = "python_calamine-0.3.2-cp38-cp38-win32.whl", hash = "sha256:1732ecc135eafbbc656275351afbe012c96bbf251b9b84c6100b9c29847b8d6d"},
+    {file = "python_calamine-0.3.2-cp38-cp38-win_amd64.whl", hash = "sha256:12cf51fa76470ba55fc87dafd151dd25653fbec8ce8f561fb3035aaac2e15fc5"},
+    {file = "python_calamine-0.3.2-cp39-cp39-macosx_10_12_x86_64.whl", hash = "sha256:5737e1b85a63be8d95779a93ff52fa9609d812fe5d3c4ca5b96460f772138fb5"},
+    {file = "python_calamine-0.3.2-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:7615d3384adc5524aa4aad2d7fa0caf8a95d158d78dfe4e0b1b873e7f8e4a63b"},
+    {file = "python_calamine-0.3.2-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:cb6b0594b4817c3e80092c79a63235a22d1901c02d0000a05cb43a8daa16c52a"},
+    {file = "python_calamine-0.3.2-cp39-cp39-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:ce19742d58cf94b7cbe27d1c25764d58f30104c3e3cbd1a611833d8f31eb8a2d"},
+    {file = "python_calamine-0.3.2-cp39-cp39-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:4c7e85c09e0d000c23571d87575cc66d4ea4ae1b5613d9a921b4c8d62279d918"},
+    {file = "python_calamine-0.3.2-cp39-cp39-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:d3f29b141cc7c898966ba028262a6f74354cfbaa9fe141130b4e07556d55e1a8"},
+    {file = "python_calamine-0.3.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:46dba5b25af28331752a9ec77f7f21c6e0270680455f1ba4f73099c7d8d0af69"},
+    {file = "python_calamine-0.3.2-cp39-cp39-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:0200ab183071bcb9b5808c880a16a9fef96e15c7ec565516af89e3a237fe7ea9"},
+    {file = "python_calamine-0.3.2-cp39-cp39-musllinux_1_1_aarch64.whl", hash = "sha256:e765b82189c3ffc9a795a591f401f8e3a707ecf4c65f59a0a144a72038daf767"},
+    {file = "python_calamine-0.3.2-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:2013cf3fc2760447796fb78d8a481966528b5f243c678febb8a3381e81a9f579"},
+    {file = "python_calamine-0.3.2-cp39-cp39-win32.whl", hash = "sha256:c00d668520a078586edf27ae53edf920f5dd55cf1ed73557f9d5aa155c391edd"},
+    {file = "python_calamine-0.3.2-cp39-cp39-win_amd64.whl", hash = "sha256:35bb20e2872a4715704893f6c31091db23079c8144b3ce0da62d070fc0ecdf19"},
+    {file = "python_calamine-0.3.2-pp310-pypy310_pp73-macosx_10_12_x86_64.whl", hash = "sha256:d60399442547565b9a73cfa4087ace870d92140106a33db594e11c5ac2cc2010"},
+    {file = "python_calamine-0.3.2-pp310-pypy310_pp73-macosx_11_0_arm64.whl", hash = "sha256:2fd88c56c4cc4de6ba11a31f49fc897cb7e5c7d8c72a2abce5a68645662f4169"},
+    {file = "python_calamine-0.3.2-pp310-pypy310_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:839780a1de4d5c7880e97dac80c0a33fdb47ee835c8233e235278f0b7ce5bf2f"},
+    {file = "python_calamine-0.3.2-pp310-pypy310_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:a46fb5c3d4553cd0cfa334b80722785c5dfa449bd71fe5d5ba7e5864ef71b76f"},
+    {file = "python_calamine-0.3.2-pp310-pypy310_pp73-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:5026ea76eaa343cff5fd23ac9a19686b1cdfe84560512f86091923b7d5e4f064"},
+    {file = "python_calamine-0.3.2-pp310-pypy310_pp73-musllinux_1_1_aarch64.whl", hash = "sha256:c077efce2c7ac33bc453547e421c659290f404a0e25918e1b116194b7adffd74"},
+    {file = "python_calamine-0.3.2-pp310-pypy310_pp73-musllinux_1_1_x86_64.whl", hash = "sha256:5e2fdfd52da87df64c90281c83dc6f0b2d536be986020c51d703baa070dd2238"},
+    {file = "python_calamine-0.3.2-pp310-pypy310_pp73-win_amd64.whl", hash = "sha256:90a68d6aff566f522a1c98c0d23fc79f0a1c76c56073074004f4e39f01f6cb46"},
+    {file = "python_calamine-0.3.2-pp39-pypy39_pp73-macosx_10_12_x86_64.whl", hash = "sha256:34ef1f6fda9dc66bb834338d0aefdce06c4f9511da144c4bb0e7b8ae4fa2ed74"},
+    {file = "python_calamine-0.3.2-pp39-pypy39_pp73-macosx_11_0_arm64.whl", hash = "sha256:74333ddc705b865845e0f616aa847268fc5b882ea525f0f3bbcd5c3a9ef20f81"},
+    {file = "python_calamine-0.3.2-pp39-pypy39_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:ed0d9bc3d9d28b6a6d7fe5c637a40a484aee594800d23abfbfb2eab6a85a0882"},
+    {file = "python_calamine-0.3.2-pp39-pypy39_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:4c01d8cc9bfc2d9bc6cddaf387562eb9a6812b78c5b2e3049877f3e11d7d6f41"},
+    {file = "python_calamine-0.3.2-pp39-pypy39_pp73-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:18ffc5f7358dd9df640dd150ce51cc90e65856d563fe7a18f6f6d7eba5a65f52"},
+    {file = "python_calamine-0.3.2-pp39-pypy39_pp73-musllinux_1_1_aarch64.whl", hash = "sha256:53553a27f758964595f7f4d4f8bccc4fc63cf64fe9f69f151dcd9e6bef4918d5"},
+    {file = "python_calamine-0.3.2-pp39-pypy39_pp73-musllinux_1_1_x86_64.whl", hash = "sha256:36b7394630c368417ee71bb9672e6eb2db92d7cf00d00187df2952158fee098b"},
+    {file = "python_calamine-0.3.2-pp39-pypy39_pp73-win_amd64.whl", hash = "sha256:55abf050b43ca69eb3715d0b6400cc18c12d9269a002b821dfc473f870863f3d"},
+    {file = "python_calamine-0.3.2.tar.gz", hash = "sha256:5cf12f2086373047cdea681711857b672cba77a34a66dd3755d60686fc974e06"},
+]
+
+[package.dependencies]
+packaging = ">=23.1"
+
+[package.extras]
+dev = ["maturin (>=1.0,<2.0)", "numpy (>=1.0,<2.0)", "pandas[excel] (>=2.0,<3.0)", "pre-commit (>=3.0,<4.0)", "pytest (>=8.0,<9.0)"]
+
+[[package]]
 name = "python-dateutil"
 version = "2.9.0.post0"
 description = "Extensions to the standard Python datetime module"
@@ -1597,6 +1759,17 @@ python-versions = "*"
 files = [
     {file = "pytz-2025.2-py2.py3-none-any.whl", hash = "sha256:5ddf76296dd8c44c26eb8f4b6f35488f3ccbf6fbbd7adee0b7262d43f0ec2f00"},
     {file = "pytz-2025.2.tar.gz", hash = "sha256:360b9e3dbb49a209c21ad61809c7fb453643e048b38924c765813546746e81c3"},
+]
+
+[[package]]
+name = "pyxlsb"
+version = "1.0.10"
+description = "Excel 2007-2010 Binary Workbook (xlsb) parser"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pyxlsb-1.0.10-py2.py3-none-any.whl", hash = "sha256:87c122a9a622e35ca5e741d2e541201d28af00fb46bec492cfa9586890b120b4"},
+    {file = "pyxlsb-1.0.10.tar.gz", hash = "sha256:8062d1ea8626d3f1980e8b1cfe91a4483747449242ecb61013bc2df85435f685"},
 ]
 
 [[package]]
@@ -2142,6 +2315,33 @@ files = [
 ]
 
 [[package]]
+name = "xlrd"
+version = "2.0.1"
+description = "Library for developers to extract data from Microsoft Excel (tm) .xls spreadsheet files"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
+files = [
+    {file = "xlrd-2.0.1-py2.py3-none-any.whl", hash = "sha256:6a33ee89877bd9abc1158129f6e94be74e2679636b8a205b43b85206c3f0bbdd"},
+    {file = "xlrd-2.0.1.tar.gz", hash = "sha256:f72f148f54442c6b056bf931dbc34f986fd0c3b0b6b5a58d013c9aef274d0c88"},
+]
+
+[package.extras]
+build = ["twine", "wheel"]
+docs = ["sphinx"]
+test = ["pytest", "pytest-cov"]
+
+[[package]]
+name = "xlsxwriter"
+version = "3.2.3"
+description = "A Python module for creating Excel XLSX files."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "XlsxWriter-3.2.3-py3-none-any.whl", hash = "sha256:593f8296e8a91790c6d0378ab08b064f34a642b3feb787cf6738236bd0a4860d"},
+    {file = "xlsxwriter-3.2.3.tar.gz", hash = "sha256:ad6fd41bdcf1b885876b1f6b7087560aecc9ae5a9cc2ba97dcac7ab2e210d3d5"},
+]
+
+[[package]]
 name = "yarl"
 version = "1.20.0"
 description = "Yet another URL library"
@@ -2262,4 +2462,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "ae400c2de72a00353112f05cbc16dc1140d04d2208a70a61f5220cf7b0a3f153"
+content-hash = "d686d367d6f509d6678f2869c16b415b5b82262a1c7bb1aa4ad11b650a694792"
