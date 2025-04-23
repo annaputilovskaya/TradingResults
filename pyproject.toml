@@ -11,6 +11,12 @@ asyncio = "^3.4.3"
 aiohttp = "^3.11.18"
 bs4 = "^0.0.2"
 pandas = "^2.2.3"
+fastapi = {extras = ["standard"], version = "^0.115.12"}
+asyncpg = "^0.30.0"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.40"}
+alembic = "^1.15.2"
+python-dotenv = "^1.1.0"
+pydantic-settings = "^2.9.1"
 
 
 [build-system]
