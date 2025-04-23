@@ -62,6 +62,16 @@ class LoggingConfig(BaseModel):
         return logging.getLevelNamesMapping()[self.log_level.upper()]
 
 
+class RedisConfig(BaseModel):
+    """
+    Redis settings.
+    """
+
+    REDIS_HOST: str = config("REDIS_HOST")
+    REDIS_PORT: str = config("REDIS_PORT")
+    redis_url: str = f"redis://{REDIS_HOST}:{REDIS_PORT}"
+
+
 class Settings(BaseSettings):
     """
     Application base settings.
@@ -71,5 +81,6 @@ class Settings(BaseSettings):
     run: RunConfig = RunConfig()
     db: DatabaseConfig = DatabaseConfig()
     logging: LoggingConfig = LoggingConfig()
+    redis: RedisConfig = RedisConfig()
 
 settings = Settings()
