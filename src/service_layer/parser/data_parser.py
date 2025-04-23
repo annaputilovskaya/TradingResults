@@ -1,9 +1,13 @@
 import logging
 from io import BytesIO
+from time import time
 
+import asyncio
 import numpy
 import pandas as pd
 from aiohttp import ClientSession
+
+from src.config import HOST
 
 log = logging.getLogger(__name__)
 
@@ -48,3 +52,29 @@ def extract_data_from_file(data: bytes) -> pd.DataFrame | None:
         usecols=[1, 2, 3, 4, 5, 14],
     )
     return filtered[filtered["Количество\nДоговоров,\nшт."] != "-"]
+
+
+
+async def get_data_by_link(link: str) -> pd.DataFrame | None:
+    """
+    Sends a GET request to the given URL, extracts data from the XLS file.
+
+    Args:
+        link (str): The URL to send the GET request to.
+
+    Returns:
+        pd.DataFrame: The filtered DataFrame or None if an error occurred.
+        str: The link from which the data was fetched.
+    """
+    t0 = time()
+    async with ClientSession() as session:
+        filepath = HOST + link
+        log.info(f"Started reading {filepath}")
+        data = await get_bytes(filepath, session)
+        try:
+            df = await asyncio.to_thread(extract_data_from_file, data=data)
+        except Exception as e:
+            log.error(f"Error extracting data from {filepath}: {e}")
+        else:
+            log.info(f"Finished reading. Execution time {time() - t0:.3f} seconds.")
+            return df, link
