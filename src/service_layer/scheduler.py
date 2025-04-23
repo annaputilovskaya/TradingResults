@@ -2,6 +2,7 @@ import logging
 from time import time
 
 from aiohttp import ClientSession
+from fastapi_cache import FastAPICache
 
 from src import dbh
 from src.service_layer.parser.data_parser import parse_trading_results
@@ -30,3 +31,14 @@ async def main_parser():
         log.info(f"Finished. Execution time {time() - t0:.3f} second")
     else:
         log.info("No new trading results found.")
+
+
+async def cache_clear():
+    """
+    Clear redis cache.
+    """
+    try:
+        await FastAPICache.clear()
+        log.info("Cache cleared")
+    except Exception as e:
+        log.error(f"Error cleaning cache: {e}.")
