@@ -7,7 +7,9 @@ import numpy
 import pandas as pd
 from aiohttp import ClientSession
 
+from src import dbh
 from src.config import HOST
+from src.service_layer.parser.results_generator import generate_trading_result_objects
 
 log = logging.getLogger(__name__)
 
@@ -54,7 +56,6 @@ def extract_data_from_file(data: bytes) -> pd.DataFrame | None:
     return filtered[filtered["Количество\nДоговоров,\nшт."] != "-"]
 
 
-
 async def get_data_by_link(link: str) -> pd.DataFrame | None:
     """
     Sends a GET request to the given URL, extracts data from the XLS file.
@@ -78,3 +79,24 @@ async def get_data_by_link(link: str) -> pd.DataFrame | None:
         else:
             log.info(f"Finished reading. Execution time {time() - t0:.3f} seconds.")
             return df, link
+
+
+async def write_to_db(results_list: list) -> None:
+    """
+    Save the given trading results to the database.
+
+    Args:
+        results_list (list): The list of TradingResult objects to save to the database.
+    """
+    t0 = time()
+    log.info(f"Start writing results to db.")
+    async with dbh.session_factory() as session:
+        session.add_all(results_list)
+        try:
+            log.info(
+                f"Finished writing results to db. Execution time {time() - t0:.3f} seconds."
+            )
+            await session.commit()
+        except Exception as e:
+            log.error(f"Error saving trading results: {e} to db.")
+            await session.rollback()
