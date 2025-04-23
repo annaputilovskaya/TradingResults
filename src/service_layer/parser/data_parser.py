@@ -100,3 +100,25 @@ async def write_to_db(results_list: list) -> None:
         except Exception as e:
             log.error(f"Error saving trading results: {e} to db.")
             await session.rollback()
+
+
+async def parse_trading_results(links: set) -> None:
+    """
+    Parses trading results from the given links and saves them to the database.
+
+    Args:
+        links (set): The set of URLs to fetch trading results from.
+    """
+    t0 = time()
+    tasks = []
+    for link in links:
+        task = asyncio.create_task(get_data_by_link(link))
+        tasks.append(task)
+    df_list = await asyncio.gather(*tasks)
+    results_list = []
+    for df in df_list:
+        results_list.extend(list(generate_trading_result_objects(df[0], df[1])))
+    await write_to_db(results_list)
+    log.warning(
+        f"Parsed and saved trading results. Execution time {time() - t0:.3f} seconds."
+    )
