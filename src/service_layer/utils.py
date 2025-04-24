@@ -46,3 +46,29 @@ def validate_dates_interval(
             status_code=400, detail="Start date should be less or equal to end date"
         )
     return start_date, end_date
+
+
+def set_filters(
+        oil_id: str | None,
+        delivery_type_id: str | None,
+        delivery_basis_id: str | None
+) -> dict[str, str | None]:
+    """
+    Create dictionary with given params.
+
+    Args:
+        oil_id (str | None): The oil ID.
+        delivery_type_id (str | None): The delivery type ID.
+        delivery_basis_id (str | None): The delivery basis ID.
+
+     Returns:
+        filters (dict[str, str | None]): Empty dictionary or dictionary with str params.
+    """
+    filters = {}
+    if oil_id:
+        filters["oil_id"] = oil_id
+    if delivery_type_id:
+        filters["delivery_type_id"] = delivery_type_id
+    if delivery_basis_id:
+        filters["delivery_basis_id"] = delivery_basis_id
+    return filters
