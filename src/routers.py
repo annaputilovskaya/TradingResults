@@ -48,7 +48,7 @@ async def get_dynamics(
 
 @router.get(
     "/last",
-    summary="Last trading result matching the given parameters",
+    summary="Last trading results matching the given parameters",
 )
 @cache()
 async def get_trading_results(
