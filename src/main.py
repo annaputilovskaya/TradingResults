@@ -13,6 +13,7 @@ from redis import asyncio as aioredis
 
 from src import dbh
 from src.config import settings
+from src.routers import router
 from src.service_layer.scheduler import main_parser, cache_clear
 
 log = logging.getLogger(__name__)
@@ -67,6 +68,7 @@ async def lifespan(app: FastAPI):
 
 
 main_app = FastAPI(title="SpimexTradingResults", lifespan=lifespan)
+main_app.include_router(router)
 
 
 if __name__ == "__main__":
