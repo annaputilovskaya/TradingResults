@@ -43,7 +43,7 @@ async def get_dynamics(
             status_code=404,
             detail=f"Trading results for given parameters not found",
         )
-    return
+    return results
 
 
 @router.get(
@@ -58,10 +58,10 @@ async def get_trading_results(
     delivery_basis_id: str | None = None,
 ):
     filters = set_filters(oil_id, delivery_type_id, delivery_basis_id)
-    result = await get_last_results(db=db, filters=filters)
-    if result is None:
+    results = await get_last_results(db=db, filters=filters)
+    if results is None:
         raise HTTPException(
             status_code=404,
             detail=f"Trading results for given parameters not found",
         )
-    return result
+    return results
