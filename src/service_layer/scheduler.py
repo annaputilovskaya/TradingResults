@@ -21,7 +21,7 @@ async def main_parser():
         if result:
             earliest_date = result[0]
         else:
-            earliest_date = "20230101"
+            earliest_date = "20221231"
         log.info(f"Earliest date: {earliest_date}.")
     t0 = time()
     async with ClientSession() as session:

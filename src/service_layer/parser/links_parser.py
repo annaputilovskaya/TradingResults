@@ -56,7 +56,7 @@ def extract_links_from_response(
         link = string.get("href")
         if link:
             date = get_date_from_link(link)
-            if date >= earliest_date:
+            if date > earliest_date:
                 links.add(link)
             else:
                 is_new = False
@@ -65,7 +65,7 @@ def extract_links_from_response(
 
 
 async def get_new_trading_results_links(
-    session: ClientSession, earliest_date: str = "20230101"
+    session: ClientSession, earliest_date: str = "20221231"
 ) -> set[str]:
     """
     Get unique links to XLS files with daily trading results from the website.
