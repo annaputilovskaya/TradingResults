@@ -3,7 +3,7 @@ from datetime import date
 from sqlalchemy import select, and_, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src import ORMTradingResult
+from src.models import ORMTradingResult
 from src.service_layer.utils import validate_dates_interval
 
 

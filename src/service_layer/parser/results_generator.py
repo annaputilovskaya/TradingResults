@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src import ORMTradingResult
+from src.models import ORMTradingResult
 from src.models.domain import TradingResult
 from src.service_layer.utils import get_date_from_link
 

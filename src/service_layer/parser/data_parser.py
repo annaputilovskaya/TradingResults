@@ -7,8 +7,8 @@ import numpy
 import pandas as pd
 from aiohttp import ClientSession
 
-from src import dbh
 from src.config import HOST
+from src.models import dbh
 from src.service_layer.parser.results_generator import generate_trading_result_objects
 
 log = logging.getLogger(__name__)

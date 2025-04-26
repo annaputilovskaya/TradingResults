@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi_cache.decorator import cache
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src import dbh
+from src.models import dbh
 from src.service_layer.queries import get_dates, get_filtered_trading_results, get_last_results
 from src.service_layer.utils import set_filters
 

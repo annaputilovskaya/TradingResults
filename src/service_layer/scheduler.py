@@ -7,7 +7,7 @@ from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.date import DateTrigger
 from fastapi_cache import FastAPICache
 
-from src import dbh
+from src.models import dbh
 from src.service_layer.parser.data_parser import parse_trading_results
 from src.service_layer.parser.links_parser import get_new_trading_results_links
 from src.service_layer.queries import get_dates
