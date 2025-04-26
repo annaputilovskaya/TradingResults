@@ -54,3 +54,5 @@ dbh = DatabaseHelper(
     pool_size=settings.db.pool_size,
     max_overflow=settings.db.max_overflow,
 )
+
+test_dbh = DatabaseHelper
