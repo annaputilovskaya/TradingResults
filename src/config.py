@@ -1,4 +1,5 @@
 import logging
+import os.path
 from pathlib import Path
 from typing import Literal
 
@@ -9,9 +10,10 @@ from starlette.config import Config
 HOST = "https://spimex.com"
 RESULTS_URL = HOST + "/markets/oil_products/trades/results"
 
-BASE_DIR = Path(__file__).parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
+LOG_DIR = os.path.join(BASE_DIR, "logs")
 
-config = Config("../.env")
+config = Config(os.path.join(BASE_DIR, ".env"))
 
 
 class RunConfig(BaseModel):
@@ -35,6 +37,7 @@ class DatabaseConfig(BaseModel):
     DB_PORT: str = config("POSTGRES_PORT")
     DB_NAME: str = config("POSTGRES_DB")
     url: str = f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    test_url: str = f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/test_{DB_NAME}"
     echo: bool = bool(int(config("POSTGRES_ECHO")))
     echo_pool: bool = False
     pool_size: int = 50
