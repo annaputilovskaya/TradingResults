@@ -1,5 +1,3 @@
-import logging
-
 import asyncio
 import pytest
 import pytest_asyncio
@@ -8,6 +6,8 @@ from typing import Any, AsyncGenerator
 from contextlib import asynccontextmanager
 from asgi_lifespan import LifespanManager
 from fastapi import FastAPI
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.inmemory import InMemoryBackend
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy import insert
 
@@ -68,6 +68,7 @@ async def app() -> AsyncGenerator[LifespanManager, Any]:
         """
         Prepare testing database for tests.
         """
+        FastAPICache.init(InMemoryBackend())
         async with test_db.engine.begin() as conn:
             await conn.run_sync(Base.metadata.drop_all)
             await conn.run_sync(Base.metadata.create_all)
@@ -76,6 +77,8 @@ async def app() -> AsyncGenerator[LifespanManager, Any]:
         yield
         async with test_db.engine.begin() as conn:
             await conn.run_sync(Base.metadata.drop_all)
+        FastAPICache.reset()
+
 
     test_app = FastAPI(docs_url=None,
                   redoc_url=None,
@@ -90,5 +93,34 @@ async def app() -> AsyncGenerator[LifespanManager, Any]:
 
 @pytest_asyncio.fixture(scope="session", autouse=True)
 async def get_async_session():
+    """
+    Overrides dependency for getting asynchronous session for testing.
+
+    Yields:
+        AsyncSession: Asynchronous session for testing.
+    """
     async with test_db.session_factory() as session:
         yield session
+
+
+@pytest_asyncio.fixture(scope='session', autouse=True)
+async def client(app: FastAPI) -> AsyncGenerator[AsyncClient, Any]:
+    """
+    Creates asynchronous client for testing.
+
+    Args:
+        app(FastAPI): FastAPI application for testing.
+
+    Yields:
+         client(AsyncClient): The asynchronous client for testing.
+    """
+    async with AsyncClient(
+        transport=ASGITransport(app=app),
+        base_url="http://test",
+    ) as client:
+        yield client
+
+
+@pytest.fixture(name="disable_cache", scope="function")
+async def in_memory_cache_clear():
+    return await FastAPICache.clear()
