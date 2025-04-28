@@ -4,7 +4,7 @@ from contextlib import  nullcontext as does_not_raise
 import pytest
 from fastapi import HTTPException
 
-from src.service_layer.utils import validate_dates_interval, set_filters
+from src.service_layer.utils import validate_dates_interval, set_filters, get_date_from_link
 
 
 @pytest.mark.parametrize(
@@ -49,3 +49,13 @@ def test_validate_dates_interval(start_date, end_date, expected_start_date, expe
 def test_set_filters(oil_id, delivery_type_id, delivery_basis_id, filters):
     assert set_filters(oil_id, delivery_type_id, delivery_basis_id) == filters
 
+
+@pytest.mark.parametrize(
+    "link, date_str",
+    [
+        ("https://spimex.com/upload/reports/oil_xls/oil_xls_20230119162000.xls?r=5887", "20230119"),
+        ("https://spimex.com", None),
+    ]
+)
+def test_get_date_from_link(link, date_str):
+    assert get_date_from_link(link) == date_str
