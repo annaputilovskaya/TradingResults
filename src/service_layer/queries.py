@@ -76,7 +76,7 @@ async def get_last_results(
     """
     last_date_subquery = (
         select(func.max(ORMTradingResult.date)).select_from(ORMTradingResult)
-    )
+    ).scalar_subquery()
     query = (
         select(ORMTradingResult)
         .filter_by(**filters).where(ORMTradingResult.date == last_date_subquery)
