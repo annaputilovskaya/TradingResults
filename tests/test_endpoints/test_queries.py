@@ -5,7 +5,7 @@ import pytest
 from src.service_layer.queries import get_dates, get_filtered_trading_results, get_last_results
 
 
-@pytest.mark.usefixtures("app")
+@pytest.mark.asyncio
 class TestQueries:
 
     @pytest.mark.parametrize(
