@@ -4,7 +4,7 @@ from datetime import date
 from fastapi import HTTPException
 
 
-def get_date_from_link(link: str) -> str:
+def get_date_from_link(link: str) -> str | None:
     """
     Extracts date from the link.
 
@@ -14,8 +14,11 @@ def get_date_from_link(link: str) -> str:
     Returns:
         str: The date extracted from the link in the format "YYYYMMDD".
     """
-    match = re.search(r"oil_xls_(\d{8})\d{6}", link)
-    return match.group(1)
+    try:
+        match = re.search(r"oil_xls_(\d{8})\d{6}", link)
+        return match.group(1)
+    except AttributeError:
+        return None
 
 
 def validate_dates_interval(
