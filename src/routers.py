@@ -6,6 +6,7 @@ from fastapi_cache.decorator import cache
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.models import dbh
+from src.models.schemas import TradingResultSchema
 from src.service_layer.queries import get_dates, get_filtered_trading_results, get_last_results
 from src.service_layer.utils import set_filters
 
@@ -24,6 +25,7 @@ async def get_last_trading_dates(
 @router.get(
     "/",
     summary="The list of trading results matching the given parameters for a certain period",
+    response_model=list[TradingResultSchema]
 )
 @cache()
 async def get_dynamics(
@@ -49,6 +51,7 @@ async def get_dynamics(
 @router.get(
     "/last",
     summary="Last trading results matching the given parameters",
+    response_model=list[TradingResultSchema]
 )
 @cache()
 async def get_trading_results(
