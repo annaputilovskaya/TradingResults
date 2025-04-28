@@ -4,7 +4,7 @@ from contextlib import  nullcontext as does_not_raise
 import pytest
 from fastapi import HTTPException
 
-from src.service_layer.utils import validate_dates_interval
+from src.service_layer.utils import validate_dates_interval, set_filters
 
 
 @pytest.mark.parametrize(
@@ -21,3 +21,31 @@ from src.service_layer.utils import validate_dates_interval
 def test_validate_dates_interval(start_date, end_date, expected_start_date, expected_end_date, expectation):
     with expectation:
         assert validate_dates_interval(start_date, end_date) == (expected_start_date, expected_end_date)
+
+
+@pytest.mark.parametrize(
+    "oil_id, delivery_type_id, delivery_basis_id, filters",
+    [
+        ("A100", "A", "ABS", {
+            "oil_id": "A100",
+            "delivery_type_id": "A",
+            "delivery_basis_id": "ABS"
+            }),
+        (None, "A", "ABS", {
+            "delivery_type_id": "A",
+            "delivery_basis_id": "ABS"
+            }),
+        ("A100", None, "ABS", {
+            "oil_id": "A100",
+            "delivery_basis_id": "ABS"
+            }),
+        ("A100", "A", None, {
+            "oil_id": "A100",
+            "delivery_type_id": "A",
+        }),
+        (None, None, None, {})
+    ]
+)
+def test_set_filters(oil_id, delivery_type_id, delivery_basis_id, filters):
+    assert set_filters(oil_id, delivery_type_id, delivery_basis_id) == filters
+
