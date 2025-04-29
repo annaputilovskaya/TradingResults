@@ -45,7 +45,7 @@ async def override_get_async_session():
         yield session
 
 
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope='package', autouse=True)
 def event_loop():
     """
     Yields event loop for test session.
@@ -55,7 +55,7 @@ def event_loop():
     loop.close()
 
 
-@pytest_asyncio.fixture(scope='session', autouse=True)
+@pytest_asyncio.fixture(scope='package', autouse=True)
 async def app() -> AsyncGenerator[LifespanManager, Any]:
     """
     Create FastAPI application for testing.
@@ -91,7 +91,7 @@ async def app() -> AsyncGenerator[LifespanManager, Any]:
         yield manager.app
 
 
-@pytest_asyncio.fixture(scope="session", autouse=True)
+@pytest_asyncio.fixture(scope="package", autouse=True)
 async def get_async_session():
     """
     Overrides dependency for getting asynchronous session for testing.
@@ -103,7 +103,7 @@ async def get_async_session():
         yield session
 
 
-@pytest_asyncio.fixture(scope='session', autouse=True)
+@pytest_asyncio.fixture(scope='package', autouse=True)
 async def client(app: FastAPI) -> AsyncGenerator[AsyncClient, Any]:
     """
     Creates asynchronous client for testing.
@@ -121,6 +121,6 @@ async def client(app: FastAPI) -> AsyncGenerator[AsyncClient, Any]:
         yield client
 
 
-@pytest.fixture(name="disable_cache", scope="function")
+@pytest.fixture(name="disable_cache", scope="class")
 async def in_memory_cache_clear():
     return await FastAPICache.clear()
