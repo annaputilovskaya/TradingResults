@@ -79,8 +79,9 @@ async def get_last_results(
     ).scalar_subquery()
     query = (
         select(ORMTradingResult)
-        .filter_by(**filters).where(ORMTradingResult.date == last_date_subquery)
+        .filter_by(**filters)
+        .where(ORMTradingResult.date == last_date_subquery)
     )
 
     results = await db.scalars(query)
-    return  list(results.all())
+    return list(results.all())

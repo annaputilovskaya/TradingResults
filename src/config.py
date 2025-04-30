@@ -37,7 +37,9 @@ class DatabaseConfig(BaseModel):
     DB_PORT: str = config("POSTGRES_PORT")
     DB_NAME: str = config("POSTGRES_DB")
     url: str = f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-    test_url: str = f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/test_{DB_NAME}"
+    test_url: str = (
+        f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/test_{DB_NAME}"
+    )
     echo: bool = bool(int(config("POSTGRES_ECHO")))
     echo_pool: bool = False
     pool_size: int = 50
@@ -85,5 +87,6 @@ class Settings(BaseSettings):
     db: DatabaseConfig = DatabaseConfig()
     logging: LoggingConfig = LoggingConfig()
     redis: RedisConfig = RedisConfig()
+
 
 settings = Settings()

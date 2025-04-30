@@ -29,7 +29,7 @@ async def override_get_async_session():
         yield session
 
 
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 def event_loop():
     """
     Yields event loop for test session.
@@ -39,7 +39,7 @@ def event_loop():
     loop.close()
 
 
-@pytest_asyncio.fixture(scope='session', autouse=True)
+@pytest_asyncio.fixture(scope="session", autouse=True)
 async def app() -> AsyncGenerator[LifespanManager, Any]:
     """
     Create FastAPI application for testing.
@@ -47,6 +47,7 @@ async def app() -> AsyncGenerator[LifespanManager, Any]:
     Yields:
          FastAPI application.
     """
+
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         """
@@ -61,11 +62,11 @@ async def app() -> AsyncGenerator[LifespanManager, Any]:
             await conn.run_sync(Base.metadata.drop_all)
         FastAPICache.reset()
 
-
-    test_app = FastAPI(docs_url=None,
-                  redoc_url=None,
-                  lifespan=lifespan,
-                  )
+    test_app = FastAPI(
+        docs_url=None,
+        redoc_url=None,
+        lifespan=lifespan,
+    )
     test_app.include_router(router=router)
     test_app.dependency_overrides[test_db.session_getter] = override_get_async_session
 

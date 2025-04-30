@@ -13,5 +13,4 @@ class TradingResultSchema(BaseModel):
     date: str = Field(max_length=8)
     oil_id: str = Field(max_length=4)
     delivery_basis_id: str = Field(3)
-    delivery_type_id: str= Field(1)
-
+    delivery_type_id: str = Field(1)

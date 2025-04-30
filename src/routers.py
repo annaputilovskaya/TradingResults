@@ -7,7 +7,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.models import dbh
 from src.models.schemas import TradingResultSchema
-from src.service_layer.queries import get_dates, get_filtered_trading_results, get_last_results
+from src.service_layer.queries import (
+    get_dates,
+    get_filtered_trading_results,
+    get_last_results,
+)
 from src.service_layer.utils import set_filters
 
 router = APIRouter(tags=["TradingResults"])
@@ -25,16 +29,16 @@ async def get_last_trading_dates(
 @router.get(
     "/",
     summary="The list of trading results matching the given parameters for a certain period",
-    response_model=list[TradingResultSchema]
+    response_model=list[TradingResultSchema],
 )
 @cache()
 async def get_dynamics(
-        db: Annotated[AsyncSession, Depends(dbh.session_getter)],
-        oil_id: str | None = None,
-        delivery_type_id: str| None = None,
-        delivery_basis_id: str| None = None,
-        start_date: date | None = None,
-        end_date: date | None = None,
+    db: Annotated[AsyncSession, Depends(dbh.session_getter)],
+    oil_id: str | None = None,
+    delivery_type_id: str | None = None,
+    delivery_basis_id: str | None = None,
+    start_date: date | None = None,
+    end_date: date | None = None,
 ):
     filters = set_filters(oil_id, delivery_type_id, delivery_basis_id)
     results = await get_filtered_trading_results(
@@ -51,7 +55,7 @@ async def get_dynamics(
 @router.get(
     "/last",
     summary="Last trading results matching the given parameters",
-    response_model=list[TradingResultSchema]
+    response_model=list[TradingResultSchema],
 )
 @cache()
 async def get_trading_results(

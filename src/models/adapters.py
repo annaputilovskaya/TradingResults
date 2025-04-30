@@ -39,7 +39,9 @@ class ORMTradingResult(Base):
     __tablename__ = "spimex_trading_results"
 
     __table_args__ = (
-        UniqueConstraint("exchange_product_id", "date", name="exchange_product_id_date"),
+        UniqueConstraint(
+            "exchange_product_id", "date", name="exchange_product_id_date"
+        ),
     )
 
     exchange_product_id: Mapped[str] = mapped_column(String(11))

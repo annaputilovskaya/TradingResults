@@ -24,14 +24,10 @@ def upgrade() -> None:
     op.create_table(
         "spimex_trading_results",
         sa.Column("exchange_product_id", sa.String(length=11), nullable=False),
-        sa.Column(
-            "exchange_product_name", sa.String(length=255), nullable=False
-        ),
+        sa.Column("exchange_product_name", sa.String(length=255), nullable=False),
         sa.Column("oil_id", sa.String(length=4), nullable=False),
         sa.Column("delivery_basis_id", sa.String(length=3), nullable=False),
-        sa.Column(
-            "delivery_basis_name", sa.String(length=255), nullable=False
-        ),
+        sa.Column("delivery_basis_name", sa.String(length=255), nullable=False),
         sa.Column("delivery_type_id", sa.String(length=1), nullable=False),
         sa.Column("volume", sa.Integer(), nullable=False),
         sa.Column("total", sa.Integer(), nullable=False),

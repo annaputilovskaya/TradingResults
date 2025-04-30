@@ -52,9 +52,7 @@ def validate_dates_interval(
 
 
 def set_filters(
-        oil_id: str | None,
-        delivery_type_id: str | None,
-        delivery_basis_id: str | None
+    oil_id: str | None, delivery_type_id: str | None, delivery_basis_id: str | None
 ) -> dict[str, str | None]:
     """
     Create dictionary with given params.
