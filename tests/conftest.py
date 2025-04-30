@@ -74,7 +74,7 @@ async def app() -> AsyncGenerator[LifespanManager, Any]:
         yield manager.app
 
 
-@pytest_asyncio.fixture(scope="session", autouse=True)
+@pytest_asyncio.fixture(scope="function", autouse=True)
 async def get_async_session():
     """
     Overrides dependency for getting asynchronous session for testing.
