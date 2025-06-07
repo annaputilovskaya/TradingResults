@@ -1,3 +1,4 @@
+import time
 from datetime import date
 from typing import Annotated
 
@@ -12,17 +13,18 @@ from src.service_layer.queries import (
     get_filtered_trading_results,
     get_last_results,
 )
-from src.service_layer.utils import set_filters
+from src.service_layer.utils import set_filters, request_key_builder
 
 router = APIRouter(tags=["TradingResults"])
 
 
 @router.get("/dates")
-@cache()
+@cache(key_builder=request_key_builder)
 async def get_last_trading_dates(
     db: Annotated[AsyncSession, Depends(dbh.session_getter)],
     days: int,
 ):
+    time.sleep(10)
     return await get_dates(db=db, days=days)
 
 
@@ -31,7 +33,7 @@ async def get_last_trading_dates(
     summary="The list of trading results matching the given parameters for a certain period",
     response_model=list[TradingResultSchema],
 )
-@cache()
+@cache(key_builder=request_key_builder)
 async def get_dynamics(
     db: Annotated[AsyncSession, Depends(dbh.session_getter)],
     oil_id: str | None = None,
@@ -49,6 +51,8 @@ async def get_dynamics(
             status_code=404,
             detail=f"Trading results for given parameters not found",
         )
+    time.sleep(10)
+
     return results
 
 
@@ -57,7 +61,7 @@ async def get_dynamics(
     summary="Last trading results matching the given parameters",
     response_model=list[TradingResultSchema],
 )
-@cache()
+@cache(key_builder=request_key_builder)
 async def get_trading_results(
     db: Annotated[AsyncSession, Depends(dbh.session_getter)],
     oil_id: str | None = None,
@@ -71,4 +75,5 @@ async def get_trading_results(
             status_code=404,
             detail=f"Trading results for given parameters not found",
         )
+    time.sleep(10)
     return results
