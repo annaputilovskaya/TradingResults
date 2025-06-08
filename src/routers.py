@@ -24,7 +24,6 @@ async def get_last_trading_dates(
     db: Annotated[AsyncSession, Depends(dbh.session_getter)],
     days: int,
 ):
-    time.sleep(10)
     return await get_dates(db=db, days=days)
 
 
@@ -51,8 +50,6 @@ async def get_dynamics(
             status_code=404,
             detail=f"Trading results for given parameters not found",
         )
-    time.sleep(10)
-
     return results
 
 
@@ -75,5 +72,4 @@ async def get_trading_results(
             status_code=404,
             detail=f"Trading results for given parameters not found",
         )
-    time.sleep(10)
     return results
