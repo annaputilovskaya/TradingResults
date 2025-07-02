@@ -2,9 +2,11 @@ import re
 from datetime import date
 
 from fastapi import HTTPException
+from starlette.requests import Request
+from starlette.responses import Response
 
 
-def get_date_from_link(link: str) -> str:
+def get_date_from_link(link: str) -> str | None:
     """
     Extracts date from the link.
 
@@ -14,8 +16,11 @@ def get_date_from_link(link: str) -> str:
     Returns:
         str: The date extracted from the link in the format "YYYYMMDD".
     """
-    match = re.search(r"oil_xls_(\d{8})\d{6}", link)
-    return match.group(1)
+    try:
+        match = re.search(r"oil_xls_(\d{8})\d{6}", link)
+        return match.group(1)
+    except AttributeError:
+        return None
 
 
 def validate_dates_interval(
@@ -49,9 +54,7 @@ def validate_dates_interval(
 
 
 def set_filters(
-        oil_id: str | None,
-        delivery_type_id: str | None,
-        delivery_basis_id: str | None
+    oil_id: str | None, delivery_type_id: str | None, delivery_basis_id: str | None
 ) -> dict[str, str | None]:
     """
     Create dictionary with given params.
@@ -72,3 +75,35 @@ def set_filters(
     if delivery_basis_id:
         filters["delivery_basis_id"] = delivery_basis_id
     return filters
+
+
+def request_key_builder(
+    func,
+    namespace: str = "",
+    *,
+    request: Request = None,
+    response: Response = None,
+    **kwargs,
+):
+    """
+    Builds a cache key.
+
+    Uses the request method, URL and query string as a cache key.
+
+    Args:
+        func: The function to be cached.
+        namespace: An optional namespace string.
+        request: An optional Request object.
+        response: An optional Response object.
+        **kwargs: Additional keyword arguments that will be included in the key.
+
+    Returns:
+        A string representing the cache key.
+    """
+    
+    return ":".join([
+        namespace,
+        request.method.lower(),
+        request.url.path,
+        repr(sorted(request.query_params.items()))
+    ])

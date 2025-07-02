@@ -1,4 +1,5 @@
 import logging
+import os.path
 from contextlib import asynccontextmanager
 
 import uvicorn
@@ -8,8 +9,8 @@ from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from redis import asyncio as aioredis
 
-from src import dbh
-from src.config import settings
+from src.config import settings, LOG_DIR
+from src.models import dbh
 from src.routers import router
 from src.service_layer.scheduler import add_jobs_to_scheduler
 
@@ -18,7 +19,7 @@ log = logging.getLogger(__name__)
 logging.basicConfig(
     level=settings.logging.log_level_value,
     format=settings.logging.log_format,
-    filename="logs/async_app.log",
+    filename=os.path.join(LOG_DIR, "async_app.log"),
 )
 
 

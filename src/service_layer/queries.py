@@ -3,7 +3,7 @@ from datetime import date
 from sqlalchemy import select, and_, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src import ORMTradingResult
+from src.models import ORMTradingResult
 from src.service_layer.utils import validate_dates_interval
 
 
@@ -76,11 +76,12 @@ async def get_last_results(
     """
     last_date_subquery = (
         select(func.max(ORMTradingResult.date)).select_from(ORMTradingResult)
-    )
+    ).scalar_subquery()
     query = (
         select(ORMTradingResult)
-        .filter_by(**filters).where(ORMTradingResult.date == last_date_subquery)
+        .filter_by(**filters)
+        .where(ORMTradingResult.date == last_date_subquery)
     )
 
     results = await db.scalars(query)
-    return  list(results.all())
+    return list(results.all())

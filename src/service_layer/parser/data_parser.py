@@ -3,12 +3,14 @@ from io import BytesIO
 from time import time
 
 import asyncio
+from typing import Any
+
 import numpy
 import pandas as pd
 from aiohttp import ClientSession
 
-from src import dbh
 from src.config import HOST
+from src.models import dbh
 from src.service_layer.parser.results_generator import generate_trading_result_objects
 
 log = logging.getLogger(__name__)
@@ -56,12 +58,13 @@ def extract_data_from_file(data: bytes) -> pd.DataFrame | None:
     return filtered[filtered["Количество\nДоговоров,\nшт."] != "-"]
 
 
-async def get_data_by_link(link: str) -> pd.DataFrame | None:
+async def get_data_by_link(filepath: str, link: str) -> tuple[Any, str] | None:
     """
     Sends a GET request to the given URL, extracts data from the XLS file.
 
     Args:
-        link (str): The URL to send the GET request to.
+        filepath (str): The full path to file.
+        link (str): The link to send the GET request to.
 
     Returns:
         pd.DataFrame: The filtered DataFrame or None if an error occurred.
@@ -69,7 +72,6 @@ async def get_data_by_link(link: str) -> pd.DataFrame | None:
     """
     t0 = time()
     async with ClientSession() as session:
-        filepath = HOST + link
         log.info(f"Started reading {filepath}")
         data = await get_bytes(filepath, session)
         try:
@@ -112,7 +114,7 @@ async def parse_trading_results(links: set) -> None:
     t0 = time()
     tasks = []
     for link in links:
-        task = asyncio.create_task(get_data_by_link(link))
+        task = asyncio.create_task(get_data_by_link(HOST + link, link))
         tasks.append(task)
     df_list = await asyncio.gather(*tasks)
     results_list = []

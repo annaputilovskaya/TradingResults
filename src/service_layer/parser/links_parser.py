@@ -56,7 +56,9 @@ def extract_links_from_response(
         link = string.get("href")
         if link:
             date = get_date_from_link(link)
-            if date > earliest_date:
+            if not date:
+                log.error("Error getting date from the link")
+            elif date > earliest_date:
                 links.add(link)
             else:
                 is_new = False
