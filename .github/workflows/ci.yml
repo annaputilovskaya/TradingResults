@@ -1,0 +1,21 @@
+name: CI for project
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  hello-world:
+    runs_on: ubuntu-latest
+
+    steps:
+      - name: Chekout code
+        uses: actions/chekout@v3
+
+      - name: Say Hello
+        run: echo "Hellow, Github Actions!"
+
+      - name: Show date
+        run: date
