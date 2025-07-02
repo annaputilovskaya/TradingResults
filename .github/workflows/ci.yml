@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Chekout code
-        uses: actions/chekout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Say Hello
         run: echo "Hellow, Github Actions!"
